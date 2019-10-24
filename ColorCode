@@ -1,19 +1,36 @@
-color = brick.ColorCode(SensorPort);
-while color~=5 %red means pause for seconds
-        distance = brick.UltrasonicDist(1);
-       if distance>16
-           brick.MoveMotor('D', -100);
-           brick.MoveMotor('A', -100);
-           pause(7);
-           brick.StopMotor('D');
-           brick.StopMotor('A');
-       else
-           
-               
-
-       end
+%brick = ConnectBrick('OOO');
+%blue is starting
+%green pick up
+%yellow drop off
+brick = ConnectBrick('OOO');
+brick.SetColorMode(B, 2);
+color = brick.ColorCode(B);
+if color == 2
+while color~=4
+    while color~=5 %red means pause for seconds
+          distance = brick.UltrasonicDist(C);
+         if distance>16
+            brick.MoveMotor('D', -100);
+            brick.MoveMotor('A', -100);
+            pause(7);
+            brick.StopMotor('D');
+            brick.StopMotor('A');
+         else
+            Brick.ResetMotorAngle('A'); 
+            brick.MoveMotorAngleRel('A', 50, 360, 'Brake'); 
+            brick.WaitForMotor('A');
+         end
+         color = brick.ColorCode(B);
+    end
+    color = brick.ColorCode(B);
+    pause(5);
 end
-pause(5);
+end
 
 
-display(distance); 
+
+
+
+
+
+
