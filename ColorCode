@@ -1,0 +1,19 @@
+color = brick.ColorCode(SensorPort);
+while color~=5 %red means pause for seconds
+        distance = brick.UltrasonicDist(1);
+       if distance>16
+           brick.MoveMotor('D', -100);
+           brick.MoveMotor('A', -100);
+           pause(7);
+           brick.StopMotor('D');
+           brick.StopMotor('A');
+       else
+           
+               
+
+       end
+end
+pause(5);
+
+
+display(distance); 
