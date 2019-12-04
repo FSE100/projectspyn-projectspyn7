@@ -1,94 +1,299 @@
 %clear;
-
 %blue is starting
-
 %green pick up
-
 %yellow drop off
-
-brick = ConnectBrick('OOO');
-
+global key
+InitKeyboard();
+%brick = ConnectBrick('OOO');
 brick.SetColorMode(4, 2);
-
 color = brick.ColorCode(4);
-
+reading = brick.TouchPressed(2);
+BOTH_DRIVE_MOTORS = 'AB';
 
 %code to pick up user
 disp(color);
-while color~=4
+while color~=0
+    color = brick.ColorCode(4);
     if color==5
-
+        pause(4);
     brick.MoveMotor('D', -20);
-
     brick.MoveMotor('A', 20);
-
     pause(3);
-
     brick.StopMotor('D');
-
     brick.StopMotor('A');
     end
-
-    while color~=5 && color~=4%red means pause for seconds
-
-          distance = brick.UltrasonicDist(3);
-
-          reading = brick.TouchPressed(4);
-
-        if distance<40
-            brick.MoveMotorAngleRel('A',-50,90);
-            brick.MoveMotorAngleRel('D', 50,90);
-            distance = brick.UltrasonicDist(3);
-        else
-            brick.MoveMotor('D', -10);
-
-            brick.MoveMotor('A', -10);
-
-            pause(4);
-
+    disp(color);
+    if color == 3
+        while 1
+            pause(0.1)
+        switch key
+        case 'uparrow'
+            disp('Up Arrow Pressed!');
+            brick.MoveMotor('D',-40);
+            brick.MoveMotor('A',-40)
+            pause(0.5);
             brick.StopMotor('D');
-
             brick.StopMotor('A');
-
-            if distance<40
-                brick.MoveMotorAngleRel('D',-50,360);
-                brick.MoveMotorAngleRel('A',50,360);
-                distance = brick.UltrasonicDist(3);
-            else
-                brick.MoveMotor('D', -10);
-    
-                brick.MoveMotor('A', -10);
-
-                pause(4);
-
-                brick.StopMotor('D');
-
-                brick.StopMotor('A');
-                if distance<40
-                    brick.MoveMotorAngleRel('D',-50,90);
-                    brick.MoveMotorAngleRel('A',50,90);
-                    distance = brick.UltrasonicDist(3);
-                else
-                    brick.MoveMotor('D', -10);
-
-                    brick.MoveMotor('A', -10);
-
-                    pause(4);
-    
-                    brick.StopMotor('D');
-
-                    brick.StopMotor('A');
-                end
-            end
+        case 'downarrow'
+            disp('Down Arrow Pressed!');
+            brick.MoveMotor('A',50);
+            brick.MoveMotor('D',50);
+            pause(0.5);
+            brick.StopMotor('D');
+            brick.StopMotor('A');
+        case 'leftarrow'
+            disp('Left Arrow Pressed!');
+            brick.MoveMotorAngleRel('A',-90,180);
+            brick.MoveMotorAngleRel('D',90,180);
+             brick.ResetMotorAngle('A');
+            brick.ResetMotorAngle('D');
+        case 'rightarrow'
+            disp('Right Arrow Pressed!');
+           brick.ResetMotorAngle('A');
+            brick.ResetMotorAngle('D');
+            brick.MoveMotorAngleRel('D',-90,180);
+            brick.MoveMotorAngleRel('A',90,180);
+             brick.ResetMotorAngle('A');
+            brick.ResetMotorAngle('D');
+        case 'a'
+            disp('left');
+            brick.MoveMotor('A', -90);
+            pause(0.1);
+            brick.StopMotor('AD');
+        case 'f'
+            disp('right');
+            brick.MoveMotor('D', -90);
+            brick.StopMotor('A', 'Brake');
+            pause(0.1);
+            brick.StopMotor('AD');
+        case 0
+            disp('No Key Pressed!');
+        case 'w'
+            disp('Picking up User!');
+            %code to pick up user
+            brick.MoveMotor('B', 30);
+            pause(5)
+            brick.StopMotor('B');
+        case 'd'
+            disp('Dropping off User!');
+            %code to drop off user
+            brick.MoveMotor('B', -20);
+            pause(0.4)
+            brick.StopMotor('B');
+        case 'q'
+            break;
         end
-         color = brick.ColorCode(4);
-    end
-
+       end
+   end
     color = brick.ColorCode(4);
+    if color==5
+        pause(4);
+    brick.MoveMotor('D', -20);
+    brick.MoveMotor('A', -20);
+    pause(3);
+    brick.StopMotor('D');
+    brick.StopMotor('A');
+    end
+     distance = brick.UltrasonicDist(3);
+    if distance>44
+            brick.MoveMotor('A', -90);
+            pause(0.7);
+            brick.StopMotor('AB');
+            
+            brick.MoveMotor('D', -20);
+            brick.MoveMotor('A', -20);
+            pause(1);
+            brick.StopMotor('D');
+            brick.StopMotor('A');
+             color = brick.ColorCode(4);
+            if color==5
+               pause(4);
+               brick.MoveMotor('D', -20);
+               brick.MoveMotor('A', 20);
+               pause(3);
+               brick.StopMotor('D');
+               brick.StopMotor('A');
+            end
+           brick.MoveMotor('D', -20);
+            brick.MoveMotor('A', -20);
+            pause(1);
+            brick.StopMotor('D');
+            brick.StopMotor('A');
+            color = brick.ColorCode(4);
+            if color==5
+               pause(4);
+               brick.MoveMotor('D', -20);
+               brick.MoveMotor('A', 20);
+               pause(3);
+               brick.StopMotor('D');
+               brick.StopMotor('A');
+            end
+           brick.MoveMotor('D', -20);
+            brick.MoveMotor('A', -20);
+            pause(1);
+            brick.StopMotor('D');
+            brick.StopMotor('A');
+            color = brick.ColorCode(4);
+            if color==5
+               pause(4);
+               brick.MoveMotor('D', -20);
+               brick.MoveMotor('A', 20);
+               pause(3);
+               brick.StopMotor('D');
+               brick.StopMotor('A');
+            end
+           brick.MoveMotor('D', -20);
+            brick.MoveMotor('A', -20);
+            pause(1);
+            brick.StopMotor('D');
+            brick.StopMotor('A');
+            color = brick.ColorCode(4);
+            if color==5
+               pause(4);
+               brick.MoveMotor('D', -20);
+               brick.MoveMotor('A', 20);
+               pause(3);
+               brick.StopMotor('D');
+               brick.StopMotor('A');
+           end
+  
+    else
+         brick.MoveMotor('D', -20);
+          brick.MoveMotor('A', -20);
+          pause(2);
+          brick.StopMotor('D');
+          brick.StopMotor('A');
+    end
+     color = brick.ColorCode(4);
+    if color==5
+        pause(4);
+    brick.MoveMotor('D', -20);
+    brick.MoveMotor('A', -20);
+    pause(3);
+    brick.StopMotor('D');
+    brick.StopMotor('A');
+    end
+   
+    reading = brick.TouchPressed(2);
+    if reading==1
+        disp('Wall detected');
+            brick.MoveMotor('A',30);
+            brick.MoveMotor('D',30);
+            pause(1);
+            brick.StopMotor('D');
+            brick.StopMotor('A');
+            pause(1);
+           brick.MoveMotor('D', -90);
+            brick.StopMotor('A', 'Brake');
+            pause(0.25);
+            brick.StopMotor('AB');
+            brick.MoveMotor('A',30);
+            brick.MoveMotor('D',30);
+            pause(1);
+            brick.StopMotor('D');
+            brick.StopMotor('A');
+            pause(1);
+           brick.MoveMotor('D', -90);
+            brick.StopMotor('A', 'Brake');
+            pause(0.25);
+            brick.StopMotor('AD');
+    else
+         brick.MoveMotor('D', -20);
+          brick.MoveMotor('A', -20);
+          pause(0.5);
+          brick.StopMotor('D');
+          brick.StopMotor('A'); 
+    end
+     color = brick.ColorCode(4);
+    if color==5
+        pause(4);
+    brick.MoveMotor('D', -10);
+    brick.MoveMotor('A', -10);
+    pause(3);
+    brick.StopMotor('D');
+    brick.StopMotor('A');
+    end
+     distance = brick.UltrasonicDist(3);
+    if distance>44
+            brick.MoveMotor('A', -90);
+            pause(0.7);
+            brick.StopMotor('AD');
+            
+            brick.MoveMotor('D', -20);
+            brick.MoveMotor('A', -20);
+            pause(1);
+            brick.StopMotor('D');
+            brick.StopMotor('A');
+             color = brick.ColorCode(4);
+            if color==5
+               pause(4);
+               brick.MoveMotor('D', -20);
+               brick.MoveMotor('A', 20);
+               pause(3);
+               brick.StopMotor('D');
+               brick.StopMotor('A');
+            end
+           brick.MoveMotor('D', -20);
+            brick.MoveMotor('A', -20);
+            pause(1);
+            brick.StopMotor('D');
+            brick.StopMotor('A');
+            color = brick.ColorCode(4);
+            if color==5
+               pause(4);
+               brick.MoveMotor('D', -20);
+               brick.MoveMotor('A', 20);
+               pause(3);
+               brick.StopMotor('D');
+               brick.StopMotor('A');
+            end
+           brick.MoveMotor('D', -20);
+            brick.MoveMotor('A', -20);
+            pause(1);
+            brick.StopMotor('D');
+            brick.StopMotor('A');
+            color = brick.ColorCode(4);
+            if color==5
+               pause(4);
+               brick.MoveMotor('D', -20);
+               brick.MoveMotor('A', 20);
+               pause(3);
+               brick.StopMotor('D');
+               brick.StopMotor('A');
+            end
+           brick.MoveMotor('D', -20);
+            brick.MoveMotor('A', -20);
+            pause(1);
+            brick.StopMotor('D');
+            brick.StopMotor('A');
+            color = brick.ColorCode(4);
+            if color==5
+               pause(4);
+               brick.MoveMotor('D', -20);
+               brick.MoveMotor('A', 20);
+               pause(3);
+               brick.StopMotor('D');
+               brick.StopMotor('A');
+            end
+    else
+         brick.MoveMotor('D', -10);
+          brick.MoveMotor('A', -10);
+          pause(0.5);
+          brick.StopMotor('D');
+          brick.StopMotor('A');
+    end
+     color = brick.ColorCode(4);
+    if color==5
+        pause(4);
+    brick.MoveMotor('D', -20);
+    brick.MoveMotor('A', -20);
+    pause(3);
+    brick.StopMotor('D');
+    brick.StopMotor('A');
+    end
+    color = brick.ColorCode(4);
+ end
 
-    pause(4);
-
-end
 
 
-%code to drop off user
+
