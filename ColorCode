@@ -8,7 +8,7 @@ InitKeyboard();
 brick.SetColorMode(4, 2);
 color = brick.ColorCode(4);
 reading = brick.TouchPressed(2);
-BOTH_DRIVE_MOTORS = 'AB';
+BOTH_DRIVE_MOTORS = 'AD';
 
 %code to pick up user
 disp(color);
@@ -23,7 +23,12 @@ while color~=0
     brick.StopMotor('A');
     end
     disp(color);
-    if color == 3
+    if color == 3 || color == 4
+        if color == 3
+            brick.MoveMotor('B', -20);
+            pause(0.4)
+            brick.StopMotor('B');
+        end
         while 1
             pause(0.1)
         switch key
@@ -71,8 +76,8 @@ while color~=0
         case 'w'
             disp('Picking up User!');
             %code to pick up user
-            brick.MoveMotor('B', 30);
-            pause(5)
+            brick.MoveMotor('B', 35);
+            pause(0.5)
             brick.StopMotor('B');
         case 'd'
             disp('Dropping off User!');
@@ -95,7 +100,7 @@ while color~=0
     brick.StopMotor('A');
     end
      distance = brick.UltrasonicDist(3);
-    if distance>44
+    if distance>62
             brick.MoveMotor('A', -90);
             pause(0.7);
             brick.StopMotor('AB');
@@ -185,7 +190,7 @@ while color~=0
             pause(1);
            brick.MoveMotor('D', -90);
             brick.StopMotor('A', 'Brake');
-            pause(0.25);
+            pause(0.3);
             brick.StopMotor('AB');
             brick.MoveMotor('A',30);
             brick.MoveMotor('D',30);
@@ -195,7 +200,7 @@ while color~=0
             pause(1);
            brick.MoveMotor('D', -90);
             brick.StopMotor('A', 'Brake');
-            pause(0.25);
+            pause(0.3);
             brick.StopMotor('AD');
     else
          brick.MoveMotor('D', -20);
@@ -214,7 +219,7 @@ while color~=0
     brick.StopMotor('A');
     end
      distance = brick.UltrasonicDist(3);
-    if distance>44
+    if distance>62
             brick.MoveMotor('A', -90);
             pause(0.7);
             brick.StopMotor('AD');
@@ -293,6 +298,9 @@ while color~=0
     end
     color = brick.ColorCode(4);
  end
+
+
+            
 
 
 
